@@ -1,34 +1,34 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ShopService } from './shop.service';
+import { ShopService } from './shop.service';  // Certifique-se que o nome do serviço é ShopService
 import { CreateShopDto } from './dto/create_shop.dto';
 import { UpdateShopDto } from './dto/update_shop.dto';
 
-@Controller('users')
+@Controller('shop')
 export class ShopController {
-  constructor(private readonly usersService: ShopService) {}
+  constructor(private readonly shopService: ShopService) {}  // Corrigido para shopService
 
   @Post()
-  async create(@Body() createUserDto: CreateShopDto) {
-    return await this.usersService.create(createUserDto);
+  async create(@Body() createShopDto: CreateShopDto) {
+    return await this.shopService.create(createShopDto);  // Alterado para shopService
   }
 
   @Get()
   async findAll() {
-    return await this.usersService.findAll();
+    return await this.shopService.findAll();  // Alterado para shopService
   }
 
   @Get(':id')
   async findOne(@Param('id') id: number) {
-    return await this.usersService.findOne(id);
+    return await this.shopService.findOne(id);  // Alterado para shopService
   }
 
   @Patch(':id')
-  async update(@Param('id') id: number, @Body() updateUserDto: UpdateShopDto) {
-    return await this.usersService.update(id, updateUserDto);
+  async update(@Param('id') id: number, @Body() updateShopDto: UpdateShopDto) {
+    return await this.shopService.update(id, updateShopDto);  // Alterado para shopService
   }
 
   @Delete(':id')
   async remove(@Param('id') id: number) {
-    return await this.usersService.remove(id);
+    return await this.shopService.remove(id);  // Alterado para shopService
   }
 }
