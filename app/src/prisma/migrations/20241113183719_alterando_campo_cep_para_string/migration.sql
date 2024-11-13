@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Shop" ALTER COLUMN "cep" SET DATA TYPE TEXT;
