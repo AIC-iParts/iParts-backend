@@ -12,3 +12,40 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Shop {
+  id_shop Int @id @default(autoincrement())
+  name String
+  cnpj String @unique
+  password String
+  email String @unique
+  phone String
+  fundation_date DateTime
+  street String
+  number Int
+  city String
+  state String
+  country String
+  cep Int
+  complement String
+  lat Float
+  long Float
+  //delivery_values
+  register_date DateTime @default(now())
+  register_update_date DateTime @updatedAt
+  account_status String @default("Active")
+}
+
+model Client {
+  id_client Int @id @default(autoincrement())
+  name String
+  username String
+  password String
+  cpf String
+  email String
+  phone String
+  date_of_birth DateTime
+  register_date DateTime @default(now())
+  register_update_date DateTime @updatedAt
+  account_status String @default("Active")
+}
