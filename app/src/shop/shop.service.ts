@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, HttpException, HttpStatus, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateShopDto } from './dto/create_shop.dto';
 import { UpdateShopDto } from './dto/update_shop.dto';
@@ -9,9 +9,40 @@ export class ShopService {
 
   // Método para criar uma nova loja
   async create(createShopDto: CreateShopDto) {
-    return await this.prisma.shop.create({
-      data: createShopDto,
-    });
+    try {
+      // Verifica se já existe uma loja com o mesmo CNPJ
+      const existingShopCNPJ = await this.prisma.shop.findUnique({
+        where: {
+          cnpj: createShopDto.cnpj, // Verifica pela chave única 'cnpj'
+        },
+      });
+
+      // Verifica se já existe uma loja com o mesmo CNPJ
+      const existingShopEmail = await this.prisma.shop.findUnique({
+        where: {
+          email: createShopDto.email, // Verifica pela chave única 'cnpj'
+        },
+      });
+
+      // Se a loja já existir, lança uma exceção de conflito
+      if (existingShopCNPJ) {
+        throw new ConflictException('CNPJ já registrado.');
+      }
+      if (existingShopEmail) {
+        throw new ConflictException('E-mail já registrado.');
+      }
+
+      return await this.prisma.shop.create({
+        data: createShopDto,
+      });
+
+    } catch (error) {
+      //console.log(error)
+      throw new HttpException(
+        error.message,
+        error.status,
+      );
+    }
   }
 
   // Método para listar todas as lojas
