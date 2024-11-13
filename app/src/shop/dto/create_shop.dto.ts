@@ -2,44 +2,44 @@ import { IsDate, IsEmail, IsNotEmpty, IsOptional, MinLength } from 'class-valida
 import { Type } from 'class-transformer';
 
 export class CreateShopDto {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'O nome da loja é obrigatório.' })
   name: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'O CNPJ é obrigatório.' })
   cnpj: string;
   
-  @IsNotEmpty()
-  @MinLength(6)
+  @IsNotEmpty({ message: 'A senha é obrigatória.' })
+  @MinLength(6, { message: 'A senha deve ter pelo menos 6 caracteres.' })
   password: string;
 
-  @IsNotEmpty()
-  @IsEmail()
+  @IsNotEmpty({ message: 'O e-mail é obrigatório.' })
+  @IsEmail({}, { message: 'O e-mail deve ser válido.' })
   email: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'O número de telefone é obrigatório.' })
   phone: string;
 
-  @IsOptional()
-  @IsDate()
+  @IsNotEmpty({message: 'A data de fundação é obrigatória.'})
+  @IsDate({ message: 'Data de fundação deve ser uma data válida.' })
   @Type(() => Date)
   fundation_date: Date;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'A rua é obrigatória.' })
   street: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'O número é obrigatório.' })
   number: number;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'A cidade é obrigatória.' })
   city: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'O estado é obrigatório.' })
   state: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'O país é obrigatório.' })
   country: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'O CEP é obrigatório.' })
   cep: string;
 
   @IsOptional()

@@ -27,7 +27,7 @@ model Shop {
   state String
   country String
   cep String
-  complement String
+  complement String @default("")
   lat Float
   long Float
   //delivery_values
