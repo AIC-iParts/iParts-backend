@@ -34,6 +34,24 @@ model Shop {
   register_date DateTime @default(now())
   register_update_date DateTime @updatedAt
   account_status String @default("Active")
+  products Product[]
+}
+
+model Product {
+  id_product Int @id @default(autoincrement())
+  name String
+  description String
+  price Float
+  category String
+  manucafturer String
+  serial_number String
+  stock Int
+  lenght Float
+  width Float
+  height Float
+  weight Float
+  id_shop Int
+  shop Shop @relation(fields: [id_shop], references: [id_shop])
 }
 
 model Client {
