@@ -20,17 +20,17 @@ model Shop {
   password String
   email String @unique
   phone String
-  fundation_date DateTime
+  fundation_date DateTime?
   street String
   number Int
   city String
   state String
   country String
   cep String
-  complement String @default("")
+  complement String?
   lat Float
   long Float
-  //delivery_values
+  delivery_value Float?
   register_date DateTime @default(now())
   register_update_date DateTime @updatedAt
   account_status String @default("Active")
@@ -44,7 +44,7 @@ model Product {
   price Float
   category String
   manucafturer String
-  serial_number String
+  serial_number String?
   stock Int
   lenght Float
   width Float
@@ -61,8 +61,8 @@ model Client {
   password String
   cpf String
   email String
-  phone String
-  date_of_birth DateTime
+  phone String?
+  date_of_birth DateTime?
   register_date DateTime @default(now())
   register_update_date DateTime @updatedAt
   account_status String @default("Active")

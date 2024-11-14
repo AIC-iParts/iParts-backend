@@ -23,7 +23,7 @@ export class CreateShopDto {
   @IsString()
   phone: string;
 
-  @IsNotEmpty({message: 'A data de fundação é obrigatória.'})
+  @IsOptional()
   @IsDate({ message: 'Data de fundação deve ser uma data válida.' })
   @Type(() => Date)
   fundation_date: Date;
