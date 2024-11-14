@@ -2,12 +2,15 @@ import { Injectable, NotFoundException, HttpException, HttpStatus, ConflictExcep
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateShopDto } from './dto/create_shop.dto';
 import { UpdateShopDto } from './dto/update_shop.dto';
+import { GeocodingService } from 'src/geocoding/geocoding.service';
 
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class ShopService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService,
+    private readonly geocodingService: GeocodingService
+  ) {}
 
   // Método para criar uma nova loja
   async create(createShopDto: CreateShopDto) {
@@ -38,6 +41,15 @@ export class ShopService {
       const saltOrRounds = 10;
       const hashedPassword = await bcrypt.hash(createShopDto.password, saltOrRounds);
       createShopDto.password = hashedPassword
+
+      //obtendo lat e long
+      const coordinates = await this.geocodingService.getCoordinates(
+        `${createShopDto.street}, ${createShopDto.number} - ${createShopDto.city} - ${createShopDto.state} - ${createShopDto.country}`
+      );
+      if (coordinates) {
+        createShopDto.lat = coordinates.lat
+        createShopDto.long = coordinates.long
+      }
 
       return await this.prisma.shop.create({
         data: createShopDto,
