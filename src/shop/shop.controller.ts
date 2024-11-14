@@ -17,9 +17,9 @@ export class ShopController {
     return await this.shopService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: number) {
-    return await this.shopService.findOne(id);
+  @Get(':id_shop')
+  async findOne(@Param('id_shop') id_shop: number) {
+    return await this.shopService.findOne(id_shop);
   }
 
   @Patch(':id')

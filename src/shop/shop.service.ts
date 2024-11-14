@@ -18,14 +18,14 @@ export class ShopService {
       // Verifica se já existe uma loja com o mesmo CNPJ
       const existingShopCNPJ = await this.prisma.shop.findUnique({
         where: {
-          cnpj: createShopDto.cnpj, // Verifica pela chave única 'cnpj'
+          cnpj: createShopDto.cnpj,
         },
       });
 
       // Verifica se já existe uma loja com o mesmo CNPJ
       const existingShopEmail = await this.prisma.shop.findUnique({
         where: {
-          email: createShopDto.email, // Verifica pela chave única 'cnpj'
+          email: createShopDto.email,
         },
       });
 
@@ -51,9 +51,13 @@ export class ShopService {
         createShopDto.long = coordinates.long
       }
 
-      return await this.prisma.shop.create({
+      await this.prisma.shop.create({
         data: createShopDto,
       });
+
+      return {
+        message: "Loja cadastrada com sucesso!"
+      }
 
     } catch (error) {
       //console.log(error)
@@ -71,7 +75,13 @@ export class ShopService {
 
   // Método para encontrar uma loja específica pelo ID
   async findOne(id_shop: number) {
-    const shop = await this.prisma.shop.findUnique({ where: { id_shop } });
+
+    const shop = await this.prisma.shop.findUnique({ 
+        where:  {
+           id_shop : id_shop 
+          } 
+      });
+
     if (!shop) {
       throw new NotFoundException(`Shop with ID ${id_shop} not found`);
     }
