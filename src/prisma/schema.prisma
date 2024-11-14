@@ -35,6 +35,40 @@ model Shop {
   register_update_date DateTime @updatedAt
   account_status String @default("Active")
   products Product[]
+  orders Order[]
+  analytics Analytcs[]
+}
+
+model Client {
+  id_client Int @id @default(autoincrement())
+  name String
+  username String
+  password String
+  cpf String
+  email String
+  phone String?
+  date_of_birth DateTime?
+  register_date DateTime @default(now())
+  register_update_date DateTime @updatedAt
+  account_status String @default("Active")
+  orders Order[]
+  addresses Address[]
+}
+
+model Address {
+  id_address Int @id @default(autoincrement())
+  name String?
+  cep String
+  street String
+  number Int
+  city String
+  state String
+  country String
+  complement String?
+  lat Float
+  long Float
+  id_client Int
+  client Client @relation(fields: [id_client], references: [id_client])
 }
 
 model Product {
@@ -52,18 +86,39 @@ model Product {
   weight Float
   id_shop Int
   shop Shop @relation(fields: [id_shop], references: [id_shop])
+  order_products OrderProduct[]
 }
 
-model Client {
-  id_client Int @id @default(autoincrement())
-  name String
-  username String
-  password String
-  cpf String
-  email String
-  phone String?
-  date_of_birth DateTime?
-  register_date DateTime @default(now())
-  register_update_date DateTime @updatedAt
-  account_status String @default("Active")
+model Order {
+  id_order Int @id @default(autoincrement())
+  status String?
+  observations String?
+  delivery_value Float
+  date DateTime
+  id_shop Int
+  shop Shop @relation(fields: [id_shop], references: [id_shop])
+  id_client Int
+  client Client @relation(fields: [id_client], references: [id_client])
+  order_products OrderProduct[]
+}
+
+model OrderProduct {
+  id_order_product Int @id @default(autoincrement())
+  amount Int
+  price Float
+  id_order Int
+  id_product Int
+  order Order @relation(fields: [id_order], references: [id_order])
+  product Product @relation(fields: [id_product], references: [id_product])
+}
+
+model Analytcs {
+  id_alytics Int @id @default(autoincrement())
+  total_sales Float?
+  total_sales_last_year Float?
+  total_sales_last_semester Float?
+  total_sales_last_month Float?
+  total_sales_last_week Float?
+  id_shop Int
+  shop Shop @relation(fields: [id_shop], references: [id_shop])
 }
