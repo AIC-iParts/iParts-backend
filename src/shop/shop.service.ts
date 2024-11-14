@@ -3,6 +3,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateShopDto } from './dto/create_shop.dto';
 import { UpdateShopDto } from './dto/update_shop.dto';
 
+import * as bcrypt from 'bcrypt';
+
 @Injectable()
 export class ShopService {
   constructor(private prisma: PrismaService) {}
@@ -31,6 +33,11 @@ export class ShopService {
       if (existingShopEmail) {
         throw new ConflictException('E-mail já registrado.');
       }
+
+      //gerando hash da senha
+      const saltOrRounds = 10;
+      const hashedPassword = await bcrypt.hash(createShopDto.password, saltOrRounds);
+      createShopDto.password = hashedPassword
 
       return await this.prisma.shop.create({
         data: createShopDto,
