@@ -21,18 +21,18 @@ model Shop {
   email String @unique
   phone String
   fundation_date DateTime?
+  cep String
   street String
   address_number Int
-  city String
-  state String
-  country String
-  cep String
+  id_city Int
+  city City @relation(fields: [id_city], references: [id_city])
   complement String?
   lat Float
   long Float
   delivery_value Float?
-  register_date DateTime @default(now())
-  register_update_date DateTime @updatedAt
+  opened Boolean @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   account_status String @default("Active")
   products Product[]
   orders Order[]
@@ -48,8 +48,8 @@ model Client {
   email String
   phone String?
   date_of_birth DateTime?
-  register_date DateTime @default(now())
-  register_update_date DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   account_status String @default("Active")
   orders Order[]
   addresses Address[]
@@ -61,14 +61,46 @@ model Address {
   cep String
   street String
   address_number Int
-  city String
-  state String
-  country String
   complement String?
+  id_city Int
+  city City @relation(fields: [id_city], references: [id_city])
   lat Float
   long Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   id_client Int
   client Client @relation(fields: [id_client], references: [id_client])
+}
+
+model City {
+  id_city Int @id @default(autoincrement())
+  name String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  id_state Int
+  state State @relation(fields: [id_state], references: [id_state])
+  addresses Address[]
+  shops Shop[]
+}
+
+model State {
+  id_state Int @id @default(autoincrement())
+  name String
+  state_code String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  id_country Int
+  country Country @relation(fields: [id_country], references: [id_country])
+  cities City[]
+}
+
+model Country {
+  id_country Int @id @default(autoincrement())
+  name String
+  country_code String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  states State[]
 }
 
 model Product {
@@ -84,6 +116,8 @@ model Product {
   width Float
   height Float
   weight Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   id_shop Int
   shop Shop @relation(fields: [id_shop], references: [id_shop])
   order_products OrderProduct[]
@@ -94,7 +128,8 @@ model Order {
   status String?
   observations String?
   delivery_value Float
-  date DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   id_shop Int
   shop Shop @relation(fields: [id_shop], references: [id_shop])
   id_client Int
@@ -106,6 +141,8 @@ model OrderProduct {
   id_order_product Int @id @default(autoincrement())
   amount Int
   price Float
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   id_order Int
   id_product Int
   order Order @relation(fields: [id_order], references: [id_order])
@@ -119,6 +156,8 @@ model Analytcs {
   total_sales_last_semester Float?
   total_sales_last_month Float?
   total_sales_last_week Float?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   id_shop Int
   shop Shop @relation(fields: [id_shop], references: [id_shop])
 }
