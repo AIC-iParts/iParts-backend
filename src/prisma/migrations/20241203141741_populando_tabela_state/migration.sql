@@ -1,0 +1,31 @@
+-- This is an empty migration.
+
+INSERT INTO "State" (name, state_code, id_country, created_at, updated_at)
+VALUES
+('Acre', 'AC', 1, current_timestamp, current_timestamp),
+('Alagoas', 'AL', 1, current_timestamp, current_timestamp),
+('Amazonas', 'AM', 1, current_timestamp, current_timestamp),
+('Amapá', 'AP', 1, current_timestamp, current_timestamp),
+('Bahia', 'BA', 1, current_timestamp, current_timestamp),
+('Ceará', 'CE', 1, current_timestamp, current_timestamp),
+('Distrito Federal', 'DF', 1, current_timestamp, current_timestamp),
+('Espírito Santo', 'ES', 1, current_timestamp, current_timestamp),
+('Goiás', 'GO', 1, current_timestamp, current_timestamp),
+('Maranhão', 'MA', 1, current_timestamp, current_timestamp),
+('Minas Gerais', 'MG', 1, current_timestamp, current_timestamp),
+('Mato Grosso do Sul', 'MS', 1, current_timestamp, current_timestamp),
+('Mato Grosso', 'MT', 1, current_timestamp, current_timestamp),
+('Pará', 'PA', 1, current_timestamp, current_timestamp),
+('Paraíba', 'PB', 1, current_timestamp, current_timestamp),
+('Pernambuco', 'PE', 1, current_timestamp, current_timestamp),
+('Piauí', 'PI', 1, current_timestamp, current_timestamp),
+('Paraná', 'PR', 1, current_timestamp, current_timestamp),
+('Rio de Janeiro', 'RJ', 1, current_timestamp, current_timestamp),
+('Rio Grande do Norte', 'RN', 1, current_timestamp, current_timestamp),
+('Rondônia', 'RO', 1, current_timestamp, current_timestamp),
+('Roraima', 'RR', 1, current_timestamp, current_timestamp),
+('Rio Grande do Sul', 'RS', 1, current_timestamp, current_timestamp),
+('Santa Catarina', 'SC', 1, current_timestamp, current_timestamp),
+('Sergipe', 'SE', 1, current_timestamp, current_timestamp),
+('São Paulo', 'SP', 1, current_timestamp, current_timestamp),
+('Tocantins', 'TO', 1, current_timestamp, current_timestamp);
