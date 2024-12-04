@@ -13,7 +13,7 @@ export class ShopService {
   ) {}
 
   // Método para criar uma nova loja
-  async create(createShopDto: CreateShopDto) {
+  async createShopService(createShopDto: CreateShopDto) {
     try {
       const {name, cnpj, password, confirmPassword, email, phone, fundation_date, cep, street, address_number, complement, id_city} = createShopDto
       // Verifica se já existe uma loja com o mesmo CNPJ ou E-mail
@@ -87,12 +87,12 @@ export class ShopService {
   }
 
   // Método para listar todas as lojas
-  async findAll() {
+  async getAllShopsService() {
     return await this.prisma.shop.findMany();
   }
 
   // Método para encontrar uma loja específica pelo ID
-  async findOne(id_shop: number) {
+  async getShopByIdService(id_shop: number) {
 
     const shop = await this.prisma.shop.findUnique({ 
         where:  {
@@ -107,7 +107,7 @@ export class ShopService {
   }
 
   // Método para atualizar uma loja específica pelo ID
-  async update(id_shop: number, updateShopDto: UpdateShopDto) {
+  async updateShopService(id_shop: number, updateShopDto: UpdateShopDto) {
     const shop = await this.prisma.shop.update({
       where: { id_shop },
       data: updateShopDto,
@@ -116,7 +116,7 @@ export class ShopService {
   }
 
   // Método para remover uma loja específica pelo ID
-  async remove(id_shop: number) {
+  async deleteShopService(id_shop: number) {
     await this.prisma.shop.delete({ where: { id_shop } });
   }
 }
