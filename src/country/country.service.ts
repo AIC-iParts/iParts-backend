@@ -1,4 +1,18 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class CountryService {}
+export class CountryService {
+
+    async getAllCountries() {
+
+    }
+
+    async getCountryById() {
+
+    }
+
+    async getCountryByName() {
+        
+    }
+    
+}
