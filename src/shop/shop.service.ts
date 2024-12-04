@@ -22,7 +22,7 @@ export class ShopService {
         },
       });
 
-      // Verifica se já existe uma loja com o mesmo CNPJ
+      // Verifica se já existe uma loja com o mesmo E-mail
       const existingShopEmail = await this.prisma.shop.findUnique({
         where: {
           email: createShopDto.email,
@@ -44,8 +44,9 @@ export class ShopService {
 
       //obtendo lat e long
       const coordinates = await this.geocodingService.getCoordinates(
-        `${createShopDto.street}, ${createShopDto.number} - ${createShopDto.city} - ${createShopDto.state} - ${createShopDto.country}`
+        `${createShopDto.cep}`
       );
+
       if (coordinates) {
         createShopDto.lat = coordinates.lat
         createShopDto.long = coordinates.long
