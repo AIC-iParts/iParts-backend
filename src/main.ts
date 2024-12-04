@@ -8,12 +8,13 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('iParts API')
-    //.setDescription('The cats API description')
+    //.setDescription('Descrição')
     .setVersion('1.0')
-    //.addTag('cats')
+    //.addTag('iParts')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+  SwaggerModule.setup('doc', app, documentFactory);
 
   app.useGlobalPipes(
     new ValidationPipe({
