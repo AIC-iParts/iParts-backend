@@ -16,6 +16,10 @@ export class CreateShopDto {
 
   @IsNotEmpty()
   @IsString()
+  confirmPassword: string;
+
+  @IsNotEmpty()
+  @IsString()
   @IsEmail()
   email: string;
 
@@ -47,12 +51,4 @@ export class CreateShopDto {
   @IsNotEmpty()
   @IsNumber()
   id_city: number;
-
-  @IsOptional()
-  @IsNumber()
-  lat: number;
-
-  @IsOptional()
-  @IsNumber()
-  long: number;
 }
