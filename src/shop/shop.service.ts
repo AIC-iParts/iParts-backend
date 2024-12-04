@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, HttpException, HttpStatus, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, HttpException, ConflictException} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateShopDto } from './dto/create_shop.dto';
 import { UpdateShopDto } from './dto/update_shop.dto';
@@ -15,50 +15,67 @@ export class ShopService {
   // Método para criar uma nova loja
   async create(createShopDto: CreateShopDto) {
     try {
-      // Verifica se já existe uma loja com o mesmo CNPJ
-      const existingShopCNPJ = await this.prisma.shop.findUnique({
+      const {name, cnpj, password, confirmPassword, email, phone, fundation_date, cep, street, address_number, complement, id_city} = createShopDto
+      // Verifica se já existe uma loja com o mesmo CNPJ ou E-mail
+      const existingShop = await this.prisma.shop.findFirst({
         where: {
-          cnpj: createShopDto.cnpj,
-        },
-      });
-
-      // Verifica se já existe uma loja com o mesmo E-mail
-      const existingShopEmail = await this.prisma.shop.findUnique({
-        where: {
-          email: createShopDto.email,
+          OR: [
+            { cnpj: cnpj },
+            { email: email },
+          ],
         },
       });
 
       // Se a loja já existir, lança uma exceção de conflito
-      if (existingShopCNPJ) {
-        throw new ConflictException('CNPJ já registrado.');
+      if (existingShop) {
+        if (existingShop.cnpj === cnpj) {
+          throw new ConflictException('CNPJ já registrado.');
+        }
+        if (existingShop.email === email) {
+          throw new ConflictException('E-mail já registrado.');
+        }
       }
-      if (existingShopEmail) {
-        throw new ConflictException('E-mail já registrado.');
+
+      if (password != confirmPassword) {
+        throw new ConflictException('As senhas não coincidem')
       }
 
       //gerando hash da senha
       const saltOrRounds = 10;
-      const hashedPassword = await bcrypt.hash(createShopDto.password, saltOrRounds);
-      createShopDto.password = hashedPassword
+      const hashedPassword = await bcrypt.hash(password, saltOrRounds);
 
       //obtendo lat e long
       const coordinates = await this.geocodingService.getCoordinates(
-        `${createShopDto.cep}`
+        `${cep}`
       );
 
-      if (coordinates) {
-        createShopDto.lat = coordinates.lat
-        createShopDto.long = coordinates.long
-      }
-
-      await this.prisma.shop.create({
-        data: createShopDto,
+      const newShop = await this.prisma.shop.create({
+        data: {
+          name,
+          cnpj,
+          password: hashedPassword,
+          email,
+          phone,
+          fundation_date,
+          cep,
+          street,
+          address_number,
+          complement,
+          id_city,
+          lat: coordinates?.lat,
+          long:coordinates?.long
+        },
       });
 
       return {
-        message: "Loja cadastrada com sucesso!"
-      }
+        message: "Loja cadastrada com sucesso!",
+        shop: {
+          id_shop: newShop.id_shop,
+          name: newShop.name,
+          cnpj: newShop.cnpj,
+          email: newShop.email,
+        },
+      };
 
     } catch (error) {
       //console.log(error)
