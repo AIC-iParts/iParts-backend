@@ -26,6 +26,19 @@ export class CityService {
         return city;
     }
 
+    async getCityByName(city_name : string) { //Retorna a cidade do nome informado
+        const city = await this.prisma.city.findFirst({ 
+            where:  {
+               name : city_name
+              } 
+          });
+    
+        if (!city) {
+          throw new NotFoundException(`City with name ${city_name} not found`);
+        }
+        return city;
+    }
+
     async getAllCitiesByStateId(id_state : number) { //Retorna todas as cidades que são do state com id fornecido
         return this.cacheService.getCache(`state_${id_state}`,
             () => this.prisma.city.findMany({
