@@ -5,6 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateShopDto {
   @ApiProperty()
   @IsNotEmpty()
+  @IsString()
   name: string;
 
   @ApiProperty()
@@ -21,6 +22,7 @@ export class CreateShopDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  @MinLength(6)
   confirmPassword: string;
 
   @ApiProperty()
