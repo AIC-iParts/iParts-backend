@@ -7,9 +7,10 @@ import { StateModule } from './state/state.module';
 import { CityModule } from './city/city.module';
 import { AddressModule } from './address/address.module';
 import { CacheModule } from './cache/cache.module';
+import { ClientModule } from './client/client.module';
 
 @Module({
-  imports: [ShopModule, CountryModule, StateModule, CityModule, AddressModule, CacheModule],
+  imports: [ShopModule, CountryModule, StateModule, CityModule, AddressModule, CacheModule, ClientModule],
   controllers: [],
   providers: [PrismaService],
 })
