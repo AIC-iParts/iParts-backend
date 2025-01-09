@@ -6,12 +6,14 @@ import { Prisma } from '@prisma/client';
 import { plainToInstance } from 'class-transformer';
 import { ResponseAddressDto } from './dto/response_address.dto';
 import { ClientService } from 'src/client/client.service';
+import { CityService } from 'src/city/city.service';
 
 @Injectable()
 export class AddressService {
   constructor(private prisma: PrismaService,
       private readonly geocodingService: GeocodingService,
       private readonly clientService: ClientService,
+      private readonly cityService: CityService,
     ) {}
 
   async getAllAddresses() {
@@ -33,7 +35,8 @@ export class AddressService {
 
   async createAddress(createAddressDto : CreateAddressDto){
     try {
-      await this.clientService.getClientById(createAddressDto.id_client); //chama o service para verificar se o client existe
+      await this.clientService.getClientById(createAddressDto.id_client); // verifica se o client existe
+      await this.cityService.getCityById(createAddressDto.id_city); // verifica se a cidade informada é válida
 
       const newAddress = await this.prisma.address.create({
         data: {

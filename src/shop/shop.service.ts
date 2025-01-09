@@ -7,11 +7,13 @@ import { plainToInstance } from 'class-transformer';
 
 import * as bcrypt from 'bcrypt';
 import { ResponseShopDto } from './dto/response_shop.dto';
+import { CityService } from 'src/city/city.service';
 
 @Injectable()
 export class ShopService {
   constructor(private prisma: PrismaService,
-    private readonly geocodingService: GeocodingService
+    private readonly geocodingService: GeocodingService,
+    private readonly cityService: CityService,
   ) {}
 
   // Método para criar uma nova loja
@@ -41,6 +43,8 @@ export class ShopService {
       if (password != confirmPassword) {
         throw new ConflictException('As senhas não coincidem')
       }
+
+      await this.cityService.getCityById(createShopDto.id_city) // verifica se o id de cidade informado é valido
 
       //gerando hash da senha
       const saltOrRounds = 10;
