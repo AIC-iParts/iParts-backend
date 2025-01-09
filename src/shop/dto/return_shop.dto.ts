@@ -1,6 +1,6 @@
 import { Expose } from "class-transformer";
 
-export class ReturnShopDto {
+export class ResponseShopDto {
     @Expose()
     id_shop: number;
 

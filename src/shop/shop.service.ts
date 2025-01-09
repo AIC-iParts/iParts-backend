@@ -3,8 +3,10 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateShopDto } from './dto/create_shop.dto';
 import { UpdateShopDto } from './dto/update_shop.dto';
 import { GeocodingService } from 'src/geocoding/geocoding.service';
+import { plainToInstance } from 'class-transformer';
 
 import * as bcrypt from 'bcrypt';
+import { ResponseShopDto } from './dto/return_shop.dto';
 
 @Injectable()
 export class ShopService {
@@ -69,12 +71,7 @@ export class ShopService {
 
       return {
         message: "Loja cadastrada com sucesso!",
-        shop: {
-          id_shop: newShop.id_shop,
-          name: newShop.name,
-          cnpj: newShop.cnpj,
-          email: newShop.email,
-        },
+        shop: plainToInstance(ResponseShopDto, newShop, { excludeExtraneousValues: true }),
       };
 
     } catch (error) {
@@ -88,7 +85,8 @@ export class ShopService {
 
   // Método para listar todas as lojas
   async getAllShopsService() {
-    return await this.prisma.shop.findMany();
+    const shops = await this.prisma.shop.findMany();
+    return plainToInstance(ResponseShopDto, shops, { excludeExtraneousValues: true });
   }
 
   // Método para encontrar uma loja específica pelo ID
@@ -103,7 +101,7 @@ export class ShopService {
     if (!shop) {
       throw new NotFoundException(`Shop with ID ${id_shop} not found`);
     }
-    return shop;
+    return plainToInstance(ResponseShopDto, shop, { excludeExtraneousValues: true });
   }
 
   // Método para atualizar uma loja específica pelo ID
@@ -112,7 +110,7 @@ export class ShopService {
       where: { id_shop },
       data: updateShopDto,
     });
-    return shop;
+    return plainToInstance(ResponseShopDto, shop, { excludeExtraneousValues: true });
   }
 
   // Método para remover uma loja específica pelo ID

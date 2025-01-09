@@ -2,8 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ShopService } from './shop.service';  // Certifique-se que o nome do serviço é ShopService
 import { CreateShopDto } from './dto/create_shop.dto';
 import { UpdateShopDto } from './dto/update_shop.dto';
-import { ReturnShopDto } from './dto/return_shop.dto';
-import { plainToInstance } from 'class-transformer';
 
 @Controller('shop')
 export class ShopController {
@@ -15,11 +13,8 @@ export class ShopController {
   }
 
   @Get()
-  async getAllShopsController(): Promise<ReturnShopDto[]> {
-    const shops = await this.shopService.getAllShopsService();
-    return plainToInstance(ReturnShopDto, shops, {
-      excludeExtraneousValues: true
-    })
+  async getAllShopsController() {
+    return await this.shopService.getAllShopsService();
   }
 
   @Get(':id_shop')
