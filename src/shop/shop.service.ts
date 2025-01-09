@@ -17,7 +17,7 @@ export class ShopService {
   // Método para criar uma nova loja
   async createShopService(createShopDto: CreateShopDto) {
     try {
-      const {name, cnpj, password, confirmPassword, email, phone, fundation_date, cep, street, address_number, complement, id_city} = createShopDto
+      const {cnpj, email, password, confirmPassword, cep} = createShopDto
       // Verifica se já existe uma loja com o mesmo CNPJ ou E-mail
       const existingShop = await this.prisma.shop.findFirst({
         where: {
@@ -53,17 +53,8 @@ export class ShopService {
 
       const newShop = await this.prisma.shop.create({
         data: {
-          name,
-          cnpj,
+          ...createShopDto,
           password: hashedPassword,
-          email,
-          phone,
-          fundation_date,
-          cep,
-          street,
-          address_number,
-          complement,
-          id_city,
           lat: coordinates?.lat,
           long:coordinates?.long
         },

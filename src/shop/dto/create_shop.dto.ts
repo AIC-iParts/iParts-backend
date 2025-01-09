@@ -60,7 +60,7 @@ export class CreateShopDto {
   @ApiProperty()
   @IsOptional()
   @IsString()
-  complement: string
+  complement: string;
 
   @ApiProperty()
   @IsNotEmpty()
