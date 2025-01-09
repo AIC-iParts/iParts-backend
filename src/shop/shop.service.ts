@@ -6,7 +6,7 @@ import { GeocodingService } from 'src/geocoding/geocoding.service';
 import { plainToInstance } from 'class-transformer';
 
 import * as bcrypt from 'bcrypt';
-import { ResponseShopDto } from './dto/return_shop.dto';
+import { ResponseShopDto } from './dto/response_shop.dto';
 
 @Injectable()
 export class ShopService {
