@@ -5,11 +5,13 @@ import { CreateAddressDto } from './dto/create_address.dto';
 import { Prisma } from '@prisma/client';
 import { plainToInstance } from 'class-transformer';
 import { ResponseAddressDto } from './dto/response_address.dto';
+import { ClientService } from 'src/client/client.service';
 
 @Injectable()
 export class AddressService {
   constructor(private prisma: PrismaService,
-      private readonly geocodingService: GeocodingService
+      private readonly geocodingService: GeocodingService,
+      private readonly clientService: ClientService,
     ) {}
 
   async getAllAddresses() {
@@ -31,6 +33,8 @@ export class AddressService {
 
   async createAddress(createAddressDto : CreateAddressDto){
     try {
+      await this.clientService.getClientById(createAddressDto.id_client); //chama o service para verificar se o client existe
+
       const newAddress = await this.prisma.address.create({
         data: {
           ...createAddressDto,

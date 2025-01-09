@@ -7,6 +7,7 @@ import { GeocodingModule } from 'src/geocoding/geocoding.module';
 @Module({
   providers: [ClientService, PrismaService],
   controllers: [ClientController],
-  imports: [GeocodingModule]
+  imports: [GeocodingModule],
+  exports: [ClientService]
 })
 export class ClientModule {}
