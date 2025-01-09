@@ -4,6 +4,11 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateAddressDto {
     @ApiProperty()
     @IsNotEmpty()
+    @IsNumber()
+    id_client: number;
+
+    @ApiProperty()
+    @IsNotEmpty()
     @IsString()
     name: string;
     
