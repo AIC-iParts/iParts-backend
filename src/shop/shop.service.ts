@@ -19,28 +19,28 @@ export class ShopService {
   // Método para criar uma nova loja
   async createShopService(createShopDto: CreateShopDto) {
     try {
-      const {cnpj, email, password, confirmPassword, cep} = createShopDto
+      const {confirmPassword, ...rest} = createShopDto
       // Verifica se já existe uma loja com o mesmo CNPJ ou E-mail
       const existingShop = await this.prisma.shop.findFirst({
         where: {
           OR: [
-            { cnpj: cnpj },
-            { email: email },
+            { cnpj: createShopDto.cnpj },
+            { email: createShopDto.email },
           ],
         },
       });
 
       // Se a loja já existir, lança uma exceção de conflito
       if (existingShop) {
-        if (existingShop.cnpj === cnpj) {
+        if (existingShop.cnpj === createShopDto.cnpj) {
           throw new ConflictException('CNPJ já registrado.');
         }
-        if (existingShop.email === email) {
+        if (existingShop.email === createShopDto.email) {
           throw new ConflictException('E-mail já registrado.');
         }
       }
 
-      if (password != confirmPassword) {
+      if (createShopDto.password != confirmPassword) {
         throw new ConflictException('As senhas não coincidem.')
       }
 
@@ -48,16 +48,16 @@ export class ShopService {
 
       //gerando hash da senha
       const saltOrRounds = 10;
-      const hashedPassword = await bcrypt.hash(password, saltOrRounds);
+      const hashedPassword = await bcrypt.hash(createShopDto.password, saltOrRounds);
 
       //obtendo lat e long
       const coordinates = await this.geocodingService.getCoordinates(
-        `${cep}`
+        `${createShopDto.cep}`
       );
 
       const newShop = await this.prisma.shop.create({
         data: {
-          ...createShopDto,
+          ...rest,
           password: hashedPassword,
           lat: coordinates?.lat,
           long:coordinates?.long
