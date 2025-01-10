@@ -41,7 +41,7 @@ export class ShopService {
       }
 
       if (password != confirmPassword) {
-        throw new ConflictException('As senhas não coincidem')
+        throw new ConflictException('As senhas não coincidem.')
       }
 
       await this.cityService.getCityById(createShopDto.id_city) // verifica se o id de cidade informado é valido
@@ -66,6 +66,7 @@ export class ShopService {
 
       return {
         message: "Loja cadastrada com sucesso!",
+        statusCode: 201,
         shop: plainToInstance(ResponseShopDto, newShop, { excludeExtraneousValues: true }),
       };
 
