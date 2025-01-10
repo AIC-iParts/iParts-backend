@@ -1,12 +1,14 @@
 import { Injectable, NotFoundException} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CacheService } from 'src/cache/cache.service';
+import { StateService } from 'src/state/state.service';
 
 @Injectable()
 export class CityService {
     constructor(
         private prisma: PrismaService,
         private readonly cacheService : CacheService,
+        private readonly stateService : StateService,
     ) {}
 
     async getAllCities() { //Retorna todas as cidades
@@ -40,6 +42,8 @@ export class CityService {
     }
 
     async getAllCitiesByStateId(id_state : number) { //Retorna todas as cidades que são do state com id fornecido
+        await this.stateService.getStateById(id_state)
+
         return this.cacheService.getCache(`state_${id_state}`,
             () => this.prisma.city.findMany({
                     where: {
