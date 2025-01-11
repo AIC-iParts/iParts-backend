@@ -17,9 +17,14 @@ export class ShopController {
     return await this.shopService.getAllShopsService();
   }
 
-  @Get(':id_shop')
+  @Get('/getShopById/:id_shop')
   async getShopByIdController(@Param('id_shop') id_shop: number) {
     return await this.shopService.getShopByIdService(id_shop);
+  }
+
+  @Get('/getAllShopsByCityId/:id_city')
+  async getAllShopsByCityIdController(@Param('id_city') id_city: number) {
+    return await this.shopService.getAllShopsByCityIdService(id_city);
   }
 
   @Patch(':id')

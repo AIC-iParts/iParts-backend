@@ -100,6 +100,20 @@ export class ShopService {
     return plainToInstance(ResponseShopDto, shop, { excludeExtraneousValues: true });
   }
 
+  async getAllShopsByCityIdService(id_city: number) {
+    await this.cityService.getCityById(id_city)
+
+    const shops = await this.prisma.shop.findMany({
+      where: {id_city: id_city},
+    });
+
+    if (!shops) {
+      throw new NotFoundException(`Shops not found`);
+    }
+
+    return plainToInstance(ResponseShopDto, shops, {excludeExtraneousValues: true});
+  }
+
   // Método para atualizar uma loja específica pelo ID
   async updateShopService(id_shop: number, updateShopDto: UpdateShopDto) {
     const shop = await this.prisma.shop.update({
