@@ -68,6 +68,7 @@ export class ClientService {
       where: {
         id_client: id_client,
       },
+      include: { addresses: true }
     });
 
     if(!client) {
