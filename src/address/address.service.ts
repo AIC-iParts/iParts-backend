@@ -15,10 +15,6 @@ export class AddressService {
       private readonly cityService: CityService,
     ) {}
 
-  async getAllAddresses() {
-      return await this.prisma.address.findMany();
-  }
-
   async getAddressById(id_address : number) {
       const address = await this.prisma.address.findUnique({ 
           where:  {
