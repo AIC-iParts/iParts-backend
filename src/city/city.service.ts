@@ -19,7 +19,8 @@ export class CityService {
         const city = await this.prisma.city.findUnique({ 
             where:  {
                id_city : id_city 
-              } 
+              },
+              include: { state: true }
           });
     
         if (!city) {
@@ -32,7 +33,8 @@ export class CityService {
         const city = await this.prisma.city.findFirst({ 
             where:  {
                name : city_name
-              } 
+              },
+              include: { state: true } 
           });
     
         if (!city) {
