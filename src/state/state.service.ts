@@ -24,8 +24,17 @@ export class StateService {
                 return state;
     }
 
-    async getStateByName() {
+    async getStateByStateCode(state_code: string) {
+      const state = await this.prisma.state.findFirst({ 
+        where:  {
+           state_code : state_code
+          }
+      });
 
+      if (!state) {
+        throw new NotFoundException(`State with code ${state_code} not found`);
+      }
+      return state;
     }
     
 }
