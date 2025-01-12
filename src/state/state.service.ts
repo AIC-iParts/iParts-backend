@@ -1,15 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { ResponseStateDto } from './dto/response_state.dto';
 
 @Injectable()
 export class StateService {
     constructor(
         private prisma: PrismaService,
     ) {}
-    
-    async getAllStates() {
-
-    }
 
     async getStateById(id_state: number) {
         const state = await this.prisma.state.findUnique({ 
@@ -21,7 +19,7 @@ export class StateService {
                 if (!state) {
                   throw new NotFoundException(`State with ID ${id_state} not found`);
                 }
-                return state;
+                return plainToInstance(ResponseStateDto, state, {excludeExtraneousValues: true});
     }
 
     async getStateByStateCode(state_code: string) {
@@ -34,7 +32,7 @@ export class StateService {
       if (!state) {
         throw new NotFoundException(`State with code ${state_code} not found`);
       }
-      return state;
+      return plainToInstance(ResponseStateDto, state, {excludeExtraneousValues: true});
     }
     
 }
