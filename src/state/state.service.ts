@@ -13,7 +13,8 @@ export class StateService {
         const state = await this.prisma.state.findUnique({ 
                     where:  {
                        id_state : id_state
-                      } 
+                      },
+                      include: { country: true }
                   });
             
                 if (!state) {
@@ -26,7 +27,8 @@ export class StateService {
       const state = await this.prisma.state.findFirst({ 
         where:  {
            state_code : state_code
-          }
+          },
+          include: { country: true }
       });
 
       if (!state) {

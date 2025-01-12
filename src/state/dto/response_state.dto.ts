@@ -1,4 +1,5 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { ResponseCountryDto } from 'src/country/dto/response_country.dto';
 
 export class ResponseStateDto {
   @Expose()
@@ -12,4 +13,8 @@ export class ResponseStateDto {
 
   @Expose()
   id_country: number;
+
+  @Expose()
+  @Type(() => ResponseCountryDto)
+  country: ResponseCountryDto;
 }
