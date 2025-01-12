@@ -85,6 +85,17 @@ export class ShopService {
     return plainToInstance(ResponseShopDto, shops, { excludeExtraneousValues: true });
   }
 
+  async getShopByCnpjService(cnpj: string) {
+    const shop = await this.prisma.shop.findUnique({
+      where: {cnpj: cnpj}
+    })
+
+    if (!shop) {
+      throw new NotFoundException(`Shop with CNPJ ${cnpj} not found`);
+    }
+
+    return plainToInstance(ResponseShopDto, shop, {excludeExtraneousValues: true})
+  }
   // Método para encontrar uma loja específica pelo ID
   async getShopByIdService(id_shop: number) {
 

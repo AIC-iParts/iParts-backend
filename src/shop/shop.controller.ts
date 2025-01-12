@@ -26,6 +26,12 @@ export class ShopController {
     return await this.shopService.getShopByIdService(id_shop);
   }
 
+  @Get('/getShopByCnpj/:cnpj')
+  @ApiOperation({summary: 'Retorna a loja selecionada.'})
+  async getShopByCnpjController(@Param('cnpj') cnpj: string) {
+    return await this.shopService.getShopByCnpjService(cnpj);
+  }
+
   @Get('/getAllShopsByCityId/:id_city')
   @ApiOperation({summary: 'Retorna todas as lojas da cidade selecionada.'})
   async getAllShopsByCityIdController(@Param('id_city') id_city: number) {
