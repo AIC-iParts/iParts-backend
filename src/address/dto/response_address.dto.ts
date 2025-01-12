@@ -1,4 +1,5 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { ResponseCityDto } from 'src/city/dto/response_city.dto';
 
 export class ResponseAddressDto {
   @Expose()
@@ -21,4 +22,8 @@ export class ResponseAddressDto {
 
   @Expose()
   id_city: number;
+
+  @Expose()
+  @Type(() => ResponseCityDto)
+  city: ResponseCityDto;
 }
