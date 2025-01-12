@@ -20,7 +20,13 @@ export class CityService {
             where:  {
                id_city : id_city 
               },
-              include: { state: true }
+              include: { 
+                state: {
+                    include: {
+                        country: true
+                    }
+                } 
+            }
           });
     
         if (!city) {
@@ -34,7 +40,13 @@ export class CityService {
             where:  {
                name : city_name
               },
-              include: { state: true } 
+              include: { 
+                state: {
+                    include: {
+                        country: true
+                    }
+                } 
+            } 
           });
     
         if (!city) {

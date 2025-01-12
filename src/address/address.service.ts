@@ -20,13 +20,23 @@ export class AddressService {
           where:  {
               id_address : id_address 
             },
-            include: { city: true }
+            include: { 
+              city: {
+                include: {
+                  state: {
+                    include: {
+                      country: true
+                    }
+                  }
+                }
+              }
+            }
         });
   
       if (!address) {
         throw new NotFoundException(`Address with ID ${id_address} not found`);
       }
-      return address;
+      return plainToInstance(ResponseAddressDto, address, {excludeExtraneousValues: true});
   }
 
   async createAddress(createAddressDto : CreateAddressDto){

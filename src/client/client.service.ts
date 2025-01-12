@@ -68,7 +68,21 @@ export class ClientService {
       where: {
         id_client: id_client,
       },
-      include: { addresses: true }
+      include: { 
+        addresses: {
+          include: {
+            city: {
+              include: {
+                state: {
+                  include: {
+                    country: true
+                  }
+                }
+              }
+            }
+          }
+        } 
+      }
     });
 
     if(!client) {
