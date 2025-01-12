@@ -11,4 +11,9 @@ export class AddressController {
     async createAddressController(@Body() createAddressDto: CreateAddressDto) {
       return await this.addressService.createAddress(createAddressDto);
     }
+
+    @Get(':id_address')
+    async getAddressByIdController(@Param('id_address') id_address: number) {
+      return await this.addressService.getAddressById(id_address);
+    }
 }
