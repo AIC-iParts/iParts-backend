@@ -85,6 +85,25 @@ export class ShopService {
     return plainToInstance(ResponseShopDto, shops, { excludeExtraneousValues: true });
   }
 
+  async getLoginShopInfos(cnpj: string) {
+    const shop = await this.prisma.shop.findUnique({
+      where: {cnpj: cnpj},
+      include: {
+        city: {
+          include: {
+            state: {
+              include: {
+                country: true
+              }
+            }
+          }
+        }
+      }
+    })
+
+    return shop
+  }
+
   async getShopByCnpjService(cnpj: string) {
     const shop = await this.prisma.shop.findUnique({
       where: {cnpj: cnpj}
