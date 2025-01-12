@@ -8,9 +8,10 @@ import { CityModule } from './city/city.module';
 import { AddressModule } from './address/address.module';
 import { CacheModule } from './cache/cache.module';
 import { ClientModule } from './client/client.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [ShopModule, CountryModule, StateModule, CityModule, AddressModule, CacheModule, ClientModule],
+  imports: [ShopModule, CountryModule, StateModule, CityModule, AddressModule, CacheModule, ClientModule, AuthModule],
   controllers: [],
   providers: [PrismaService],
 })
