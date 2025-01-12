@@ -91,6 +91,17 @@ export class ShopService {
     const shop = await this.prisma.shop.findUnique({ 
         where:  {
            id_shop : id_shop 
+          },
+          include: {
+            city: {
+              include: {
+                state: {
+                  include: {
+                    country: true
+                  }
+                }
+              }
+            }
           } 
       });
 
