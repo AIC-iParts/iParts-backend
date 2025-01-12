@@ -9,5 +9,6 @@ import { CityModule } from 'src/city/city.module';
   controllers: [ShopController],
   imports: [GeocodingModule, CityModule],
   providers: [ShopService, PrismaService],
+  exports: [ShopService]
 })
 export class ShopModule {}
