@@ -18,13 +18,13 @@ export class AuthService {
         const shop = await this.shopService.getLoginShopInfos(loginShopDto.cnpj)
 
         if(!shop) {
-            throw new UnauthorizedException('Invalid E-mail or Password.');
+            throw new UnauthorizedException('Invalid CNPJ or Password.');
         }
 
         const isMatch = await compare(loginShopDto.password, shop.password);
         
         if(!isMatch) {
-            throw new UnauthorizedException('Invalid E-mail or Password.');
+            throw new UnauthorizedException('Invalid CNPJ or Password.');
         }
 
         const payload: LoginPayload = {
