@@ -13,6 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum AccountStatus {
+  Active
+  Inactive
+  Suspended
+}
+
+enum TypeUser {
+  shop
+  client
+}
+
 model Shop {
   id Int @id @default(autoincrement())
   name String
@@ -21,7 +32,7 @@ model Shop {
   email String @unique
   phone String
   fundation_date DateTime?
-  type_user String @default("shop")
+  type_user TypeUser @default(shop)
   cep String
   street String
   address_number Int
@@ -34,7 +45,7 @@ model Shop {
   opened Boolean @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  account_status String @default("Active")
+  account_status AccountStatus @default(Active)
   products Product[]
   orders Order[]
   analytics Analytcs[]
@@ -49,10 +60,10 @@ model Client {
   email String @unique
   phone String?
   date_of_birth DateTime?
-  type_user String @default("client")
+  type_user TypeUser @default(client)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  account_status String @default("Active")
+  account_status AccountStatus @default(Active)
   orders Order[]
   addresses Address[]
 }
