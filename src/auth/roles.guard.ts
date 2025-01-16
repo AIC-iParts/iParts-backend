@@ -1,9 +1,9 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from './roles.decorator';
 import { UserType } from './user_type.enum';
-import { JwtService } from '@nestjs/jwt';
-import { LoginPayload } from './dto/login_payload.dto';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -20,18 +20,30 @@ export class RolesGuard implements CanActivate {
       if (!requiredRoles) {
         return true;
       }
-
-    const { authorization } = context.switchToHttp().getRequest().headers;
-    console.log(authorization)
-    const loginPayload: LoginPayload | undefined = await this.jwtService.verifyAsync(authorization.split(" ")[1], {
-        secret: process.env.JWT_SECRET,
-    })
-    .catch(() => undefined);
-
-    if (!loginPayload) {
-        return false;
-    }
+    const request = context.switchToHttp().getRequest();
+    const token = this.extractTokenFromHeader(request)
+    //console.log(token)
     
-    return requiredRoles.some((role) => role === loginPayload.type_user);
+    if (!token) {
+      throw new UnauthorizedException('Usuário não autenticado.');
+    }
+
+    try{
+      const loginPayload = await this.jwtService.verifyAsync(token, { secret: process.env.JWT_SECRET })
+      
+      if (!loginPayload) {
+        return false;
+      } 
+    
+      return requiredRoles.some((role) => role === loginPayload.type_user);
+    
+    } catch {
+      throw new UnauthorizedException('Usuário não autenticado.');
+    }
+  }
+
+  private extractTokenFromHeader(request: Request): string | undefined {
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
   }
 }
