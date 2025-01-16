@@ -5,6 +5,7 @@ import { compare } from 'bcrypt';
 import { plainToInstance } from 'class-transformer';
 import { ResponseShopDto } from 'src/shop/dto/response_shop.dto';
 import { JwtService } from '@nestjs/jwt';
+import { LoginPayload } from './dto/login_payload.dto';
 
 @Injectable()
 export class AuthService {
@@ -26,16 +27,14 @@ export class AuthService {
             throw new UnauthorizedException('Invalid E-mail or Password.');
         }
 
-        const payload = {
+        const payload: LoginPayload = {
             id: shop.id,
             name: shop.name,
-            cnpj: shop.cnpj,
-            id_city: shop.id_city
+            type_user: shop.type_user
         }
-        const access_token = await this.jwtService.signAsync(payload)
 
         return {
-            token: access_token,
+            accessToken: await this.jwtService.signAsync(payload),
             shop: plainToInstance(ResponseShopDto, shop, {excludeExtraneousValues: true})
         }
     }
