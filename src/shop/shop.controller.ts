@@ -4,6 +4,8 @@ import { CreateShopDto } from './dto/create_shop.dto';
 import { UpdateShopDto } from './dto/update_shop.dto';
 import { ApiOperation } from '@nestjs/swagger';
 import { Public } from 'src/auth/auth.decorator';
+import { UserType } from 'src/auth/user_type.enum';
+import { Roles } from 'src/auth/roles.decorator';
 
 @Controller('shop')
 export class ShopController {
@@ -41,12 +43,14 @@ export class ShopController {
   }
 
   @Patch(':id_shop')
+  @Roles(UserType.Shop)
   @ApiOperation({summary: 'Atualiza a loja selecionada.'})
   async updateShopController(@Param('id_shop') id_shop: number, @Body() updateShopDto: UpdateShopDto) {
     return await this.shopService.updateShopService(id_shop, updateShopDto);
   }
 
   @Delete(':id_shop')
+  @Roles(UserType.Shop)
   @ApiOperation({summary: 'Deleta a loja selecionada.'})
   async deleteShopController(@Param('id_shop') id_shop: number) {
     return await this.shopService.deleteShopService(id_shop);
