@@ -156,16 +156,20 @@ export class ShopService {
   }
 
   // Método para atualizar uma loja específica pelo ID
-  async updateShopService(id_shop: number, updateShopDto: UpdateShopDto) {
-    const shop = await this.prisma.shop.update({
-      where: { id: id_shop },
+  async updateShopService(updateShopDto: UpdateShopDto, request: Request) {
+    const shop = request['user']
+
+    const updatedShop = await this.prisma.shop.update({
+      where: { id: shop.id },
       data: updateShopDto,
     });
-    return plainToInstance(ResponseShopDto, shop, { excludeExtraneousValues: true });
+
+    return plainToInstance(ResponseShopDto, updatedShop, { excludeExtraneousValues: true });
   }
 
   // Método para remover uma loja específica pelo ID
-  async deleteShopService(id_shop: number) {
-    await this.prisma.shop.delete({ where: { id: id_shop } });
+  async deleteShopService(request: Request) {
+    const shop = request['user']
+    await this.prisma.shop.delete({ where: { id: shop.id } });
   }
 }

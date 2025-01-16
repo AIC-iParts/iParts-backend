@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, HttpException, HttpStatus, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, HttpException } from '@nestjs/common';
 import { GeocodingService } from 'src/geocoding/geocoding.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateAddressDto } from './dto/create_address.dto';
@@ -39,9 +39,10 @@ export class AddressService {
       return plainToInstance(ResponseAddressDto, address, {excludeExtraneousValues: true});
   }
 
-  async createAddress(createAddressDto : CreateAddressDto){
+  async createAddress(createAddressDto : CreateAddressDto, request: Request){
+    const client = request['user']
     try {
-      await this.clientService.getClientById(createAddressDto.id_client); // verifica se o client existe
+      await this.clientService.getClientById(client.id); // verifica se o client existe
       await this.cityService.getCityById(createAddressDto.id_city); // verifica se a cidade informada é válida
 
       //obtendo lat e long
@@ -52,6 +53,7 @@ export class AddressService {
       const newAddress = await this.prisma.address.create({
         data: {
           ...createAddressDto,
+          id_client: client.id,
           lat: coordinates.lat,
           long: coordinates.long
         },

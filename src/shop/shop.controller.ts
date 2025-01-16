@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { ShopService } from './shop.service';
 import { CreateShopDto } from './dto/create_shop.dto';
 import { UpdateShopDto } from './dto/update_shop.dto';
@@ -42,17 +42,17 @@ export class ShopController {
     return await this.shopService.getAllShopsByCityIdService(id_city);
   }
 
-  @Patch(':id_shop')
+  @Patch()
   @Roles(UserType.Shop)
   @ApiOperation({summary: 'Atualiza a loja selecionada.'})
-  async updateShopController(@Param('id_shop') id_shop: number, @Body() updateShopDto: UpdateShopDto) {
-    return await this.shopService.updateShopService(id_shop, updateShopDto);
+  async updateShopController(@Req() request: Request, @Body() updateShopDto: UpdateShopDto) {
+    return await this.shopService.updateShopService(updateShopDto, request);
   }
 
-  @Delete(':id_shop')
+  @Delete()
   @Roles(UserType.Shop)
   @ApiOperation({summary: 'Deleta a loja selecionada.'})
-  async deleteShopController(@Param('id_shop') id_shop: number) {
-    return await this.shopService.deleteShopService(id_shop);
+  async deleteShopController(@Req() request: Request) {
+    return await this.shopService.deleteShopService(request);
   }
 }
