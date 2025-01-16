@@ -18,7 +18,7 @@ export class AddressService {
   async getAddressById(id_address : number) {
       const address = await this.prisma.address.findUnique({ 
           where:  {
-              id_address : id_address 
+              id : id_address 
             },
             include: { 
               city: {

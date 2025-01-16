@@ -120,7 +120,7 @@ export class ShopService {
 
     const shop = await this.prisma.shop.findUnique({ 
         where:  {
-           id_shop : id_shop 
+           id : id_shop 
           },
           include: {
             city: {
@@ -158,7 +158,7 @@ export class ShopService {
   // Método para atualizar uma loja específica pelo ID
   async updateShopService(id_shop: number, updateShopDto: UpdateShopDto) {
     const shop = await this.prisma.shop.update({
-      where: { id_shop },
+      where: { id: id_shop },
       data: updateShopDto,
     });
     return plainToInstance(ResponseShopDto, shop, { excludeExtraneousValues: true });
@@ -166,6 +166,6 @@ export class ShopService {
 
   // Método para remover uma loja específica pelo ID
   async deleteShopService(id_shop: number) {
-    await this.prisma.shop.delete({ where: { id_shop } });
+    await this.prisma.shop.delete({ where: { id: id_shop } });
   }
 }

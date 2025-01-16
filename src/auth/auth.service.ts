@@ -27,7 +27,7 @@ export class AuthService {
         }
 
         const payload = {
-            id_shop: shop.id_shop,
+            id: shop.id,
             name: shop.name,
             cnpj: shop.cnpj,
             id_city: shop.id_city

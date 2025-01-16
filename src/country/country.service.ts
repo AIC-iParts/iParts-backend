@@ -17,7 +17,7 @@ export class CountryService {
     async getCountryById(id_country: number) {
         const country = await this.prisma.country.findUnique({ 
                     where:  {
-                       id_country : id_country
+                       id : id_country
                       } 
                   });
             

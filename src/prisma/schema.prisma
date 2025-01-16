@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Shop {
-  id_shop Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   name String
   cnpj String @unique
   password String
@@ -25,7 +25,7 @@ model Shop {
   street String
   address_number Int
   id_city Int
-  city City @relation(fields: [id_city], references: [id_city])
+  city City @relation(fields: [id_city], references: [id])
   complement String?
   lat Float
   long Float
@@ -40,7 +40,7 @@ model Shop {
 }
 
 model Client {
-  id_client Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   name String
   username String
   password String
@@ -56,46 +56,46 @@ model Client {
 }
 
 model Address {
-  id_address Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   name String?
   cep String
   street String
   address_number Int
   complement String?
   id_city Int
-  city City @relation(fields: [id_city], references: [id_city])
+  city City @relation(fields: [id_city], references: [id])
   lat Float
   long Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   id_client Int
-  client Client @relation(fields: [id_client], references: [id_client])
+  client Client @relation(fields: [id_client], references: [id])
 }
 
 model City {
-  id_city Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   name String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   id_state Int
-  state State @relation(fields: [id_state], references: [id_state])
+  state State @relation(fields: [id_state], references: [id])
   addresses Address[]
   shops Shop[]
 }
 
 model State {
-  id_state Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   name String
   state_code String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   id_country Int
-  country Country @relation(fields: [id_country], references: [id_country])
+  country Country @relation(fields: [id_country], references: [id])
   cities City[]
 }
 
 model Country {
-  id_country Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   name String
   country_code String
   created_at DateTime @default(now())
@@ -104,7 +104,7 @@ model Country {
 }
 
 model Product {
-  id_product Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   name String
   description String
   price Float
@@ -119,38 +119,38 @@ model Product {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   id_shop Int
-  shop Shop @relation(fields: [id_shop], references: [id_shop])
+  shop Shop @relation(fields: [id_shop], references: [id])
   order_products OrderProduct[]
 }
 
 model Order {
-  id_order Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   status String?
   observations String?
   delivery_value Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   id_shop Int
-  shop Shop @relation(fields: [id_shop], references: [id_shop])
+  shop Shop @relation(fields: [id_shop], references: [id])
   id_client Int
-  client Client @relation(fields: [id_client], references: [id_client])
+  client Client @relation(fields: [id_client], references: [id])
   order_products OrderProduct[]
 }
 
 model OrderProduct {
-  id_order_product Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   amount Int
   price Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   id_order Int
   id_product Int
-  order Order @relation(fields: [id_order], references: [id_order])
-  product Product @relation(fields: [id_product], references: [id_product])
+  order Order @relation(fields: [id_order], references: [id])
+  product Product @relation(fields: [id_product], references: [id])
 }
 
 model Analytcs {
-  id_alytics Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   total_sales Float?
   total_sales_last_year Float?
   total_sales_last_semester Float?
@@ -159,5 +159,5 @@ model Analytcs {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   id_shop Int
-  shop Shop @relation(fields: [id_shop], references: [id_shop])
+  shop Shop @relation(fields: [id_shop], references: [id])
 }

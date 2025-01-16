@@ -18,7 +18,7 @@ export class CityService {
     async getCityById(id_city : number) { //Retorna a cidade do id especificado
         const city = await this.prisma.city.findUnique({ 
             where:  {
-               id_city : id_city 
+               id : id_city 
               },
               include: { 
                 state: {

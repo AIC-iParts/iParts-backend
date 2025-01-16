@@ -12,7 +12,7 @@ export class StateService {
     async getStateById(id_state: number) {
         const state = await this.prisma.state.findUnique({ 
                     where:  {
-                       id_state : id_state
+                       id : id_state
                       },
                       include: { country: true }
                   });
