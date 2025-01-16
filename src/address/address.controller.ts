@@ -1,14 +1,18 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { CreateAddressDto } from './dto/create_address.dto';
 import { AddressService } from './address.service';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { Roles } from 'src/auth/roles.decorator';
+import { UserType } from 'src/auth/user_type.enum';
 
+@ApiBearerAuth()
 @Controller('address')
 export class AddressController {
 
     constructor(private readonly addressService: AddressService) {}
 
     @Post()
+    @Roles(UserType.Client)
     @ApiOperation({summary: 'Cadastra um novo endereço ao usuário.'})
     async createAddressController(@Body() createAddressDto: CreateAddressDto) {
       return await this.addressService.createAddress(createAddressDto);
