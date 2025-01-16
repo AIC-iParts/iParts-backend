@@ -1,14 +1,16 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ShopService } from './shop.service';  // Certifique-se que o nome do serviço é ShopService
+import { ShopService } from './shop.service';
 import { CreateShopDto } from './dto/create_shop.dto';
 import { UpdateShopDto } from './dto/update_shop.dto';
 import { ApiOperation } from '@nestjs/swagger';
+import { Public } from 'src/auth/auth.decorator';
 
 @Controller('shop')
 export class ShopController {
   constructor(private readonly shopService: ShopService) {}
 
   @Post()
+  @Public()
   @ApiOperation({summary: 'Cadastra uma nova loja.'})
   async createShopController(@Body() createShopDto: CreateShopDto) {
     return await this.shopService.createShopService(createShopDto);

@@ -2,12 +2,14 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create_client.dto';
 import { ApiOperation } from '@nestjs/swagger';
+import { Public } from 'src/auth/auth.decorator';
 
 @Controller('client')
 export class ClientController {
     constructor(private readonly clientService: ClientService) {}
 
     @Post()
+    @Public()
     @ApiOperation({summary: 'Cadastra um novo cliente.'})
     async createClientController(@Body() createClientDto: CreateClientDto) {
     return await this.clientService.createClient(createClientDto);

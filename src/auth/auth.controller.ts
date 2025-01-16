@@ -3,8 +3,10 @@ import { ApiOperation } from '@nestjs/swagger';
 import { LoginShopDto } from './dto/login_shop.dto';
 import { AuthService } from './auth.service';
 import { LoginClientDto } from './dto/login_client.dto';
+import { Public } from 'src/auth/auth.decorator';
 
 @Controller('auth')
+@Public()
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
     
