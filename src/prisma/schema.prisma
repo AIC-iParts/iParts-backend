@@ -21,6 +21,7 @@ model Shop {
   email String @unique
   phone String
   fundation_date DateTime?
+  type_user String @default("shop")
   cep String
   street String
   address_number Int
@@ -48,6 +49,7 @@ model Client {
   email String @unique
   phone String?
   date_of_birth DateTime?
+  type_user String @default("client")
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   account_status String @default("Active")
