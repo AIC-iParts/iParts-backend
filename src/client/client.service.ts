@@ -91,4 +91,12 @@ export class ClientService {
 
     return plainToInstance(ResponseClientDto, client, { excludeExtraneousValues: true });
   }
+
+  async getLoginClientInfos(cpf: string) {
+    const client = await this.prisma.client.findUnique({
+      where: {cpf: cpf},
+    })
+
+    return client
+  }
 }
