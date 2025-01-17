@@ -13,9 +13,10 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/roles.guard';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthGuard } from './auth/auth.guard';
+import { ProductModule } from './product/product.module';
 
 @Module({
-  imports: [ShopModule, CountryModule, StateModule, CityModule, AddressModule, CacheModule, ClientModule, AuthModule, JwtModule],
+  imports: [ShopModule, CountryModule, StateModule, CityModule, AddressModule, CacheModule, ClientModule, AuthModule, JwtModule, ProductModule],
   controllers: [],
   providers: [
     PrismaService,
