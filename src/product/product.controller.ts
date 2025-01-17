@@ -30,6 +30,12 @@ export class ProductController {
         return await this.productService.getProductById(id_product);
     }
 
+    @Get(':id_shop/:category')
+    @ApiOperation({summary: 'Retorna todos os produtos da loja e categoria selecionadas.'})
+    async getAllProductsForShopAndCategoryController(@Param('id_product') id_shop: number, @Param('category') category:string) {
+        return await this.productService.getAllProductsForShopAndCategory(id_shop=id_shop, category=category);
+    }
+
     @Get(':id_shop')
     @ApiOperation({summary: 'Retorna todos os produtos da loja selecionado.'})
     async getAllProductsForShopController(@Param('id_product') id_shop: number) {

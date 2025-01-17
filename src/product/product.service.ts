@@ -44,7 +44,33 @@ export class ProductService {
     
     async getAllProducts() {
         const products = await this.prisma.product.findMany();
+        if (!products) {
+            throw new NotFoundException(`Products not found`);
+        }
         return plainToInstance(ResponseProductDto, products, { excludeExtraneousValues: true });
+    }
+
+    async getAllProductsForShopAndCategory(id_shop: number, category: string) {
+        try {
+            const products = await this.prisma.product.findMany({
+                where: {
+                    id_shop: id_shop,
+                    category: category
+                }
+            });
+    
+            if (!products) {
+                throw new NotFoundException(`Products for Shop ID ${id_shop} not found`);
+            }
+    
+            return plainToInstance(ResponseProductDto, products, {excludeExtraneousValues: true})
+            
+        } catch(error) {
+            throw new HttpException(
+                error.message,
+                error.status,
+                );
+        }
     }
 
     async getAllProductsForShop(id_shop: number) {
