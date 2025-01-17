@@ -5,7 +5,7 @@ import { compare } from 'bcrypt';
 import { plainToInstance } from 'class-transformer';
 import { ResponseShopDto } from 'src/shop/dto/response_shop.dto';
 import { JwtService } from '@nestjs/jwt';
-import { LoginPayload } from './dto/login_payload.dto';
+import { LoginShopPayload, LoginClientPayload } from './dto/login_payload.dto';
 import { LoginClientDto } from './dto/login_client.dto';
 import { ResponseClientDto } from 'src/client/dto/response_client.dto';
 import { ClientService } from 'src/client/client.service';
@@ -31,10 +31,11 @@ export class AuthService {
             throw new UnauthorizedException('Invalid CNPJ or Password.');
         }
 
-        const payload: LoginPayload = {
+        const payload: LoginShopPayload = {
             id: shop.id,
             name: shop.name,
-            type_user: shop.type_user
+            type_user: shop.type_user,
+            id_city: shop.id_city
         }
 
         return {
@@ -56,7 +57,7 @@ export class AuthService {
             throw new UnauthorizedException('Invalid CPF or Password.');
         }
 
-        const payload: LoginPayload = {
+        const payload: LoginClientPayload = {
             id: client.id,
             name: client.name,
             type_user: client.type_user
