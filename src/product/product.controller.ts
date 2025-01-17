@@ -18,6 +18,12 @@ export class ProductController {
         return await this.productService.createProduct(createProductDto, request);
     }
 
+    @Get()
+    @ApiOperation({summary: 'Retorna todos os produtos.'})
+    async getallProductsController() {
+        return await this.productService.getAllProducts();
+    }
+
     @Get(':id_product')
     @ApiOperation({summary: 'Retorna o produto selecionado.'})
     async getProductByIdController(@Param('id_product') id_product: number) {

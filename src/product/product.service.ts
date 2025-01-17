@@ -9,8 +9,8 @@ import { UpdateProductDto } from './dto/update_product.dto';
 @Injectable()
 export class ProductService {
     constructor(
-    private prisma: PrismaService,
-    private readonly shopService: ShopService
+        private prisma: PrismaService,
+        private readonly shopService: ShopService
     ) {}
 
     async createProduct(createProductDto: CreateProductDto, request: Request) {
@@ -42,6 +42,10 @@ export class ProductService {
         }
     }
     
+    async getAllProducts() {
+        const products = await this.prisma.product.findMany();
+        return plainToInstance(ResponseProductDto, products, { excludeExtraneousValues: true });
+    }
 
     async getAllProductsForShop(id_shop: number) {
         const products = await this.prisma.product.findMany({
