@@ -24,6 +24,18 @@ enum TypeUser {
   client
 }
 
+enum ProductCategory {
+  mecanica
+  suspensao
+  freio
+  interna
+  externa
+  eletrica
+  injecao
+  autocare
+  outro
+}
+
 model Shop {
   id Int @id @default(autoincrement())
   name String
@@ -119,10 +131,10 @@ model Country {
 model Product {
   id Int @id @default(autoincrement())
   name String
-  description String
+  description String?
   price Float
-  category String
-  manucafturer String
+  category ProductCategory
+  manufacturer String
   serial_number String?
   stock Int
   lenght Float
