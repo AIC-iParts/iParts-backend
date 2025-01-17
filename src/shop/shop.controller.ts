@@ -54,6 +54,14 @@ export class ShopController {
     return await this.shopService.updateShopService(updateShopDto, request);
   }
 
+  @Patch('/setShopOpenedStatus/:status')
+  @Roles(UserType.Shop)
+  @ApiBearerAuth()
+  @ApiOperation({summary: 'Atualiza o status aberto/fechado da loja.'})
+  async setShopOpenedStatusController(@Req() request: Request, @Param('status') status: boolean) {
+    return await this.shopService.setShopOpnenedStatus(request=request, status=status);
+  }
+
   @Delete()
   @Roles(UserType.Shop)
   @ApiBearerAuth()

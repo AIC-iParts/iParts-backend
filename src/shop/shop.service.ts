@@ -167,6 +167,29 @@ export class ShopService {
     return plainToInstance(ResponseShopDto, updatedShop, { excludeExtraneousValues: true });
   }
 
+  async setShopOpnenedStatus(request: Request, opened: boolean) {
+    const shop = request['user']
+
+    await this.getShopByIdService(shop.id)
+    try{
+      const success = await this.prisma.shop.update({
+        where: {id: shop.id},
+        data: { opened: opened }
+      })
+
+      return {
+        message: "Alterado com sucesso.",
+        statusCode: 201,
+      }
+
+    } catch(error) {
+      throw new HttpException(
+        error.message,
+        error.status,
+      );
+    }
+  }
+
   // Método para remover uma loja específica pelo ID
   async deleteShopService(request: Request) {
     const shop = request['user']
