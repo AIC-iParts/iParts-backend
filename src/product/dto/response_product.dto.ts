@@ -3,6 +3,9 @@ import { ResponseShopDto } from 'src/shop/dto/response_shop.dto';
 
 export class ResponseProductDto {
   @Expose()
+  id_shop: number;
+
+  @Expose()
   @Type(() => ResponseShopDto)
   shop: ResponseShopDto;
   
