@@ -1,7 +1,8 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { CityService } from './city.service';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('city')
 export class CityController {
     constructor(private readonly cityService: CityService) {}
