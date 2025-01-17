@@ -36,6 +36,11 @@ enum ProductCategory {
   outro
 }
 
+enum OrderStatus {
+  Pending
+  Finished
+}
+
 model Shop {
   id Int @id @default(autoincrement())
   name String
@@ -53,7 +58,7 @@ model Shop {
   complement String?
   lat Float
   long Float
-  delivery_value Float?
+  delivery_value Float
   opened Boolean @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -150,7 +155,7 @@ model Product {
 
 model Order {
   id Int @id @default(autoincrement())
-  status String?
+  status OrderStatus @default(Pending)
   observations String?
   delivery_value Float
   created_at DateTime @default(now())

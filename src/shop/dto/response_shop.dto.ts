@@ -33,6 +33,9 @@ export class ResponseShopDto {
     complement?: string
 
     @Expose()
+    delivery_value: number;
+
+    @Expose()
     id_city: number;
 
     @Expose()

@@ -58,6 +58,11 @@ export class CreateShopDto {
   address_number: number;
 
   @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  id_city: number;
+  
+  @ApiProperty()
   @IsOptional()
   @IsString()
   complement: string;
@@ -65,5 +70,6 @@ export class CreateShopDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  id_city: number;
+  delivery_value: number;
+
 }
