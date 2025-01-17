@@ -9,7 +9,8 @@ import { CityService } from 'src/city/city.service';
 
 @Injectable()
 export class AddressService {
-  constructor(private prisma: PrismaService,
+  constructor(
+      private prisma: PrismaService,
       private readonly geocodingService: GeocodingService,
       private readonly clientService: ClientService,
       private readonly cityService: CityService,
@@ -39,7 +40,7 @@ export class AddressService {
       return plainToInstance(ResponseAddressDto, address, {excludeExtraneousValues: true});
   }
 
-  async createAddress(createAddressDto : CreateAddressDto, request: Request){
+  async createAddress(createAddressDto: CreateAddressDto, request: Request){
     const client = request['user']
     try {
       await this.clientService.getClientById(client.id); // verifica se o client existe
@@ -61,6 +62,7 @@ export class AddressService {
   
       return {
         message: "Endereço cadastrado com sucesso!",
+        statusCode: 201,
         address: plainToInstance(ResponseAddressDto, newAddress, {excludeExtraneousValues: true}),
       };
 
