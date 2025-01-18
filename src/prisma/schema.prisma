@@ -158,6 +158,7 @@ model Order {
   status OrderStatus @default(Pending)
   observations String?
   delivery_value Float
+  total_value Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   id_shop Int
