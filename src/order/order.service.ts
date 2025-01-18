@@ -68,6 +68,26 @@ export class OrderService {
         }
     }
 
+    async getAllOrdersForShop(request: Request) {
+        const shop = request['user']
+
+        try{
+            const orders = await this.prisma.order.findMany({
+                where: { 
+                    id_shop: shop.id,
+                }
+            });
+
+            return orders
+
+        } catch(error) {
+            throw new HttpException(
+                error.message,
+                error.status,
+                );
+        }
+    }
+
     async getAllOrdersPendingForShop(request: Request) {
         const shop = request['user']
 

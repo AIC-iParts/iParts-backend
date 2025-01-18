@@ -26,6 +26,14 @@ export class OrderController {
         return this.orderService.setOrderStatusToFinished(request=request, id_order= id_order)
     }
 
+    @Get('getAllOrdersForShop')
+    @Roles(UserType.Shop)
+    @ApiProperty()
+    @ApiOperation({summary: 'Retorna todos os pedidos da loja.'})
+    async getAllOrdersShopController(@Req() request: Request) {
+        return this.orderService.getAllOrdersForShop(request=request)
+    }  
+
     @Get('getAllOrdersPendingForShop')
     @Roles(UserType.Shop)
     @ApiProperty()
