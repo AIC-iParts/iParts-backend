@@ -96,4 +96,21 @@ export class ProductService {
 
         return plainToInstance(ResponseProductDto, product, {excludeExtraneousValues: true})
     }
+
+    async getProductsByIds(products_ids: number[]) {
+        const products = await this.prisma.product.findMany({
+            where: { id: { in: products_ids } },
+            select: {
+                id: true,
+                name: true,
+                price: true,
+            },
+        });
+
+        if (products.length !== products_ids.length) {
+            throw new NotFoundException('Alguns produtos não foram encontrados.');
+          }
+      
+        return products;
+    }
 }
