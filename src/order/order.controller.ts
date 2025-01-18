@@ -24,5 +24,13 @@ export class OrderController {
     @ApiOperation({summary: 'Seta o status do pedido como finalizado.'})
     async setOrderStatusToFinished(@Req() request: Request, @Param('is_order') id_order: number) {
         return this.orderService.setOrderStatusToFinished(request=request, id_order= id_order)
+    }
+
+    @Get('getAllOrdersPendingForShop')
+    @Roles(UserType.Shop)
+    @ApiProperty()
+    @ApiOperation({summary: 'Retorna os pedidos pendentes da loja.'})
+    async getAllOrdersPendingForShopController(@Req() request: Request) {
+        return this.orderService.getAllOrdersPendingForShop(request=request)
     }  
 }

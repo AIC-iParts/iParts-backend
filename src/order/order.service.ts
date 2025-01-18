@@ -68,6 +68,27 @@ export class OrderService {
         }
     }
 
+    async getAllOrdersPendingForShop(request: Request) {
+        const shop = request['user']
+
+        try{
+            const orders = await this.prisma.order.findMany({
+                where: { 
+                    id_shop: shop.id,
+                    status: 'Pending',
+                }
+            });
+
+            return orders
+
+        } catch(error) {
+            throw new HttpException(
+                error.message,
+                error.status,
+                );
+        }
+    }
+
     async setOrderStatusToFinished(request: Request, id_order: number) {
         const shop = request['user']
 
@@ -81,7 +102,7 @@ export class OrderService {
                     status: 'Finished'
                 }
             })
-            
+
             return {
                 message: "Alterado com sucesso.",
                 statusCode: 201,
