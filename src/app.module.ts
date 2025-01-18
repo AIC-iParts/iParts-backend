@@ -15,9 +15,26 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthGuard } from './auth/auth.guard';
 import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
-  imports: [ShopModule, CountryModule, StateModule, CityModule, AddressModule, CacheModule, ClientModule, AuthModule, JwtModule, ProductModule, OrderModule],
+  imports: [
+    ShopModule, 
+    CountryModule, 
+    StateModule, 
+    CityModule, 
+    AddressModule, 
+    CacheModule, 
+    ClientModule, 
+    AuthModule, 
+    JwtModule, 
+    ProductModule, 
+    OrderModule,
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 5,
+    }])
+  ],
   controllers: [],
   providers: [
     PrismaService,
@@ -28,6 +45,10 @@ import { OrderModule } from './order/order.module';
     {
       provide: APP_GUARD,
       useClass: AuthGuard
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard
     }
   ],
 })
