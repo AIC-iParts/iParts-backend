@@ -3,7 +3,7 @@ import { ResponseAddressDto } from "../../address/dto/response_address.dto";
 
 export class ResponseClientDto {
     @Expose()
-    id_client: number;
+    id: number;
 
     @Expose()
     name: string;

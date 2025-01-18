@@ -3,7 +3,7 @@ import { ResponseCountryDto } from 'src/country/dto/response_country.dto';
 
 export class ResponseStateDto {
   @Expose()
-  id_state: number;
+  id: number;
 
   @Expose()
   name: string;

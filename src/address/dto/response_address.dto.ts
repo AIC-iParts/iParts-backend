@@ -3,7 +3,7 @@ import { ResponseCityDto } from 'src/city/dto/response_city.dto';
 
 export class ResponseAddressDto {
   @Expose()
-  id_address: number;
+  id: number;
 
   @Expose()
   name?: string;
