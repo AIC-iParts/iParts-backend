@@ -12,11 +12,6 @@ export class CreateOrderDto {
     @IsNotEmpty()
     @IsNumber()
     id_shop: number;
-    
-    @ApiProperty()
-    @IsNotEmpty()
-    @IsNumber()
-    id_client: number;
 
     @IsArray()
     @ValidateNested({ each: true })
@@ -31,8 +26,4 @@ class CreateOrderProductDto {
     @IsNumber()
     @MinLength(1)
     amount: number;
-  
-    @IsNumber()
-    @MinLength(0)
-    price: number;
   }
