@@ -67,4 +67,32 @@ export class OrderService {
                 );
         }
     }
+
+    async setOrderStatusToFinished(request: Request, id_order: number) {
+        const shop = request['user']
+
+        try{
+            const success = await this.prisma.order.update({
+                where: {
+                    id: id_order,
+                    id_shop: shop.id
+                },
+                data: {
+                    status: 'Finished'
+                }
+            })
+            
+            return {
+                message: "Alterado com sucesso.",
+                statusCode: 201,
+            }
+
+        } catch(error) {
+            throw new HttpException(
+                error.message,
+                error.status,
+                );
+        }
+    }
+
 }
