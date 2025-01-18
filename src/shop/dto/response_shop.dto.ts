@@ -3,7 +3,7 @@ import { ResponseCityDto } from "src/city/dto/response_city.dto";
 
 export class ResponseShopDto {
     @Expose()
-    id_shop: number;
+    id: number;
 
     @Expose()
     name: string;
@@ -34,7 +34,10 @@ export class ResponseShopDto {
 
     @Expose()
     delivery_value: number;
-
+    
+    @Expose()
+    opened: boolean;
+    
     @Expose()
     id_city: number;
 
