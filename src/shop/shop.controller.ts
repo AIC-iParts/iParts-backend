@@ -46,6 +46,13 @@ export class ShopController {
     return await this.shopService.getAllShopsByCityIdService(id_city);
   }
 
+  @Get('/getAllShopsOpenedByCityId/:id_city')
+  @ApiBearerAuth()
+  @ApiOperation({summary: 'Retorna todas as lojas abertas da cidade selecionada.'})
+  async getAllShopsOpenedByCityIdController(@Param('id_city') id_city: number) {
+    return await this.shopService.getAllShopsOpenedByCityIdService(id_city);
+  }
+
   @Patch()
   @Roles(UserType.Shop)
   @ApiBearerAuth()
