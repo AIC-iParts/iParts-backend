@@ -1,5 +1,6 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { ProductCategory } from '@prisma/client';
 
 export class CreateProductDto {
   @ApiProperty()
@@ -19,8 +20,8 @@ export class CreateProductDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsString()
-  category: string;
+  @IsEnum(ProductCategory)
+  category: ProductCategory;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -40,7 +41,7 @@ export class CreateProductDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  lenght : number;
+  length : number;
 
   @ApiProperty()
   @IsNotEmpty()
