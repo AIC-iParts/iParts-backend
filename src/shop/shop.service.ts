@@ -8,18 +8,20 @@ import { plainToInstance } from 'class-transformer';
 import * as bcrypt from 'bcrypt';
 import { ResponseShopDto } from './dto/response_shop.dto';
 import { CityService } from 'src/city/city.service';
+import { StateService } from 'src/state/state.service';
 
 @Injectable()
 export class ShopService {
   constructor(private prisma: PrismaService,
     private readonly geocodingService: GeocodingService,
     private readonly cityService: CityService,
+    private readonly stateService: StateService,
   ) {}
 
   // Método para criar uma nova loja
   async createShopService(createShopDto: CreateShopDto) {
     try {
-      const {confirmPassword, ...rest} = createShopDto
+      const {confirmPassword, city_name, state_code, ...rest} = createShopDto
       // Verifica se já existe uma loja com o mesmo CNPJ ou E-mail
       const existingShop = await this.prisma.shop.findFirst({
         where: {
@@ -44,7 +46,12 @@ export class ShopService {
         throw new ConflictException('As senhas não coincidem.')
       }
 
-      await this.cityService.getCityById(createShopDto.id_city) // verifica se o id de cidade informado é valido
+      const city = await this.cityService.getCityByName(createShopDto.city_name) // verifica se o id de cidade informado é valido
+      const state = await this.stateService.getStateByStateCode(createShopDto.state_code)
+
+      if (city.state.state_code != state.state_code) {
+        throw new ConflictException('A cidade não pertence ao estado informado.')
+      }
 
       //gerando hash da senha
       const saltOrRounds = 10;
@@ -58,6 +65,7 @@ export class ShopService {
       const newShop = await this.prisma.shop.create({
         data: {
           ...rest,
+          id_city: city.id,
           password: hashedPassword,
           lat: coordinates?.lat,
           long:coordinates?.long

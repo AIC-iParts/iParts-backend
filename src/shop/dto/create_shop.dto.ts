@@ -59,8 +59,13 @@ export class CreateShopDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsNumber()
-  id_city: number;
+  @IsString()
+  city_name: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  state_code: string;
   
   @ApiProperty()
   @IsOptional()
