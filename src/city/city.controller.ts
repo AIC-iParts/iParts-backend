@@ -13,9 +13,15 @@ export class CityController {
         return this.cityService.getAllCitiesByStateId(id_state);
     }
 
-    @Get('/:id_city')
+    @Get('/getCityById/:id_city')
     @ApiOperation({summary: 'Retorna a cidade selecionada.'})
     async getCityById(@Param('id_city') id_city : number) {
         return this.cityService.getCityById(id_city);
+    }
+
+    @Get('/getCityByName/:city_name')
+    @ApiOperation({summary: 'Retorna a cidade selecionada.'})
+    async getCityByName(@Param('city_name') city_name : string) {
+        return this.cityService.getCityByName(city_name);
     }
 }
