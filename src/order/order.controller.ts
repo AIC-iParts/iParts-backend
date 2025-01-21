@@ -14,8 +14,8 @@ export class OrderController {
     @Roles(UserType.Client)
     @ApiProperty()
     @ApiOperation({summary: 'Realiza um novo pedido.'})
-    async createOrderController(@Req() request: Request, @Body() creteOrderDto: CreateOrderDto) {
-        return this.orderService.createOrder(request=request, creteOrderDto=creteOrderDto)
+    async createOrderController(@Req() request: Request, @Body() createOrderDto: CreateOrderDto) {
+        return this.orderService.createOrder(request=request, createOrderDto=createOrderDto)
     }
 
     @Patch('setOrderStatusToFinished/:id_order')
