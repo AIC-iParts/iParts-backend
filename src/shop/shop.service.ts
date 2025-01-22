@@ -71,7 +71,7 @@ export class ShopService {
 
       //obtendo lat e long
       const coordinates = await this.geocodingService.getCoordinates(
-        `${createShopDto.cep}`,
+        `${createShopDto.city_name} - ${createShopDto.state_code}`,
       );
 
       const newShop = await this.prisma.shop.create({
