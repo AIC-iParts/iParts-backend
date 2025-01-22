@@ -4,6 +4,7 @@ import { AddressService } from './address.service';
 import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { Roles } from 'src/auth/roles.decorator';
 import { UserType } from 'src/auth/user_type.enum';
+import { UpdateAddressDto } from './dto/update_address.dto';
 
 @ApiBearerAuth()
 @Controller('address')
@@ -22,5 +23,21 @@ export class AddressController {
     @ApiOperation({summary: 'Retorna o endereço selecionado.'})
     async getAddressByIdController(@Param('id_address') id_address: number) {
       return await this.addressService.getAddressById(id_address);
+    }
+
+    @Patch()
+    @Roles(UserType.Client)
+    @ApiBearerAuth()
+    @ApiOperation({summary: 'Atualiza o endereço selecionado.'})
+    async updateAddressController(@Req() request: Request, @Body() updateAddressDto: UpdateAddressDto) {
+        return
+    }
+
+    @Delete()
+    @Roles(UserType.Client)
+    @ApiBearerAuth()
+    @ApiOperation({summary: 'Deleta o endereço selecionado.'})
+    async deleteAddressController(@Req() request: Request) {
+      return
     }
 }
