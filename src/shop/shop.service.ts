@@ -70,17 +70,19 @@ export class ShopService {
       );
 
       //obtendo lat e long
+      /*
       const coordinates = await this.geocodingService.getCoordinates(
         `${createShopDto.cep}`,
       );
+       */
 
       const newShop = await this.prisma.shop.create({
         data: {
           ...rest,
           id_city: city.id,
           password: hashedPassword,
-          lat: coordinates?.lat ? coordinates?.lat : 0,
-          long: coordinates?.long ? coordinates?.long : 0,
+          lat: 0,
+          long: 0,
         },
       });
 
@@ -93,7 +95,10 @@ export class ShopService {
       };
     } catch (error) {
       //console.log(error)
-      throw new HttpException(`${error.message} Erro desconhecido.`, error.status);
+      throw new HttpException(
+        `${error.message} Erro desconhecido.`,
+        error.status,
+      );
     }
   }
 
