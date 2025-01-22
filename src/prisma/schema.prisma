@@ -65,7 +65,7 @@ model Shop {
   account_status AccountStatus @default(Active)
   products Product[]
   orders Order[]
-  analytics Analytcs[]
+  analytics Analytics[]
 }
 
 model Client {
@@ -180,7 +180,7 @@ model OrderProduct {
   product Product @relation(fields: [id_product], references: [id])
 }
 
-model Analytcs {
+model Analytics {
   id Int @id @default(autoincrement())
   total_sales Float?
   total_sales_last_year Float?
