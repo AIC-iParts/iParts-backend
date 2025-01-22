@@ -69,12 +69,6 @@ export class ShopService {
         saltOrRounds,
       );
 
-      //obtendo lat e long
-      /*
-      const coordinates = await this.geocodingService.getCoordinates(
-        `${createShopDto.cep}`,
-      );
-       */
 
       const newShop = await this.prisma.shop.create({
         data: {
