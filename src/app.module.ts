@@ -16,6 +16,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { AnalyticsModule } from './analytics/analytics.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
     ThrottlerModule.forRoot([{
       ttl: 60000,
       limit: 5,
-    }])
+    }]),
+    AnalyticsModule
   ],
   controllers: [],
   providers: [
