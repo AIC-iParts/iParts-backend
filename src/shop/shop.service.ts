@@ -93,7 +93,7 @@ export class ShopService {
       };
     } catch (error) {
       //console.log(error)
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(`${error.message} Erro desconhecido.`, error.status);
     }
   }
 
